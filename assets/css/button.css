@@ -1,0 +1,16 @@
+.tipButton {
+  padding: 10px 0px; }
+  .tipButton span {
+    background: goldenrod;
+    color: white;
+    padding: 5px 5px 5px 25px;
+    display: inline-block;
+    font-size: 12px;
+    position: relative; }
+    .tipButton span:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0; }
+
+/*# sourceMappingURL=button.css.map */

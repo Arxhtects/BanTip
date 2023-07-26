@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "BanDit",
+    "description": "Base Level Extension",
+    "version": "0.1", 
+    "content_scripts": [
+        {
+        "matches": ["https://www.reddit.com/r/banano/*"],
+        "js": ["assets/lib/jquery.js", "assets/js/button.js"],
+        "css": ["assets/css/button.css"]
+        }
+    ],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": "assets/img/gmKIT88Ha1z8VBMJFOOH.png"
+    }
+  }
