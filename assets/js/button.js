@@ -1,7 +1,26 @@
 //functions
 //https://mdn.dev/archives/media/samples/domref/dispatchEvent.html
-function simulateKey() {
-
+function selectText(id){
+	var sel, range;
+	var el = document.getElementById(id); //get element id
+	if (window.getSelection && document.createRange) { //Browser compatibility
+	  sel = window.getSelection();
+	  if(sel.toString() == ''){ //no text selection
+		 window.setTimeout(function(){
+			range = document.createRange(); //range object
+			range.selectNodeContents(el); //sets Range
+			sel.removeAllRanges(); //remove all ranges from selection
+			sel.addRange(range);//add Range to a Selection.
+		},1);
+	  }
+	}else if (document.selection) { //older ie
+		sel = document.selection.createRange();
+		if(sel.text == ''){ //no text selection
+			range = document.body.createTextRange();//Creates TextRange object
+			range.moveToElementText(el);//sets Range
+			range.select(); //make selection.
+		}
+	}
 }
 
 //
@@ -18,7 +37,7 @@ $(document).ready(function() {
                 $(this).find(".loading").remove();
                 let User = $(this).parent().find('a[data-testid="comment_author_link"]').html();
                 if(User.indexOf("Banano_Tipbot") === -1) {
-                    $(this).append('<div class="tipButton reddit-worst-one tip-worst-reddit"><span>Tip ' + User + '</span></div>');
+                    $(this).append('<div class="tipButton reddit-worst-one tip-worst-reddit"><span><strong>Tip ' + User + '</strong></span></div>');
                 }
             });
         }, 2000);
@@ -45,16 +64,29 @@ $(document).ready(function() {
     //wait for it to be brought in before applying listener, probably a better way of doing this but im lazy and this works.
     setTimeout(() => {
         //<span data-text="true">!ban 0.1</span>
+        //<span data-text="true">test</span>
         [...document.querySelectorAll('.tip-worst-reddit')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
             item.addEventListener('click', function() { // > button:first-child
                 let clickMe = $(this).parent().next().find('div:eq(2) > button:first-child');
-                clickMe.click();
+                let highlightText = $(this).parent().find('div:first-child > p');
+                highlightText.append('<p id="tip_select_text_for_reply" class="_hidden_tip_chrome_addition_tip"> test</p>') //have to keep the space
+                //highlightText.attr("id", "tip_select_text_for_reply");
+                selectText("tip_select_text_for_reply");
                 setTimeout(() => {
-                    //console.log($(this).parent().next().next().html());
-                    // 🤮🤮🤮
-                    let textboxTarget = $(this).parent().next().next().find('div[data-test-id="comment-submission-form-richtext"] > div > div > div > div > div > div > div > div > div > span');
-
-                }, 500);
+                    clickMe.click();
+                    $("#tip_select_text_for_reply").remove();// done with id remove now
+                    setTimeout(() => {
+                        // 🤮🤮🤮
+                        let textboxTarget = $(this).parent().next().next().find('div[data-test-id="comment-submission-form-richtext"]');
+                        textboxTarget.next().attr("id", "tip_target_bar_focus");
+                        let submitbuttonTarget = $("#tip_target_bar_focus > div:first-child()").find('button[type="submit"]');
+                        submitbuttonTarget.click();
+                        $("#tip_target_bar_focus").attr("id", "");
+                        //change setting
+                        // let placeTarget = $("#tip_amount_target_text_area > div > div > div > div > div > div");
+                        // placeTarget.append('<div class="" data-block="true" data-editor="c78d53" data-offset-key="c78d53_initial-0-0"><div data-offset-key="c78d53_initial-0-0" class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"><span data-offset-key="c78d53_initial-0-0"><span data-text="true">test</span></span></div></div>')
+                    }, 100);
+                }, 100);
             });
         });
 

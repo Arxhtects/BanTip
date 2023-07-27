@@ -2,6 +2,10 @@ $lightGrey: #D3D3D3;
 $dark: #121928;
 $transition: all .654s ease;
 
+._hidden_tip_chrome_addition_tip {
+    display: none;
+}
+
 .tipButton {
     padding: 10px 0px;
     span {
