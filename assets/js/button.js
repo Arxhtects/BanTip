@@ -60,17 +60,28 @@ $(document).ready(function() {
     }
 
     //////////
+    $('body').append('<div id="button_tip_test"></div>');
+
+    let button = document.getElementById('button_tip_test');
+    button.addEventListener('click', function() {
+        chrome.runtime.sendMessage("OpenPopup");
+    });
+
+    chrome.runtime.onMessage.addListener((request) => {
+        console.log("Message from the background script:");
+        console.log(request.greeting);
+        $("#button_tip_test").css("background", "green");
+    });
+
+    /////////
 
     //wait for it to be brought in before applying listener, probably a better way of doing this but im lazy and this works.
     setTimeout(() => {
-        //<span data-text="true">!ban 0.1</span>
-        //<span data-text="true">test</span>
         [...document.querySelectorAll('.tip-worst-reddit')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
-            item.addEventListener('click', function() { // > button:first-child
+            item.addEventListener('click', function() {
                 let clickMe = $(this).parent().next().find('div:eq(2) > button:first-child');
                 let highlightText = $(this).parent().find('div:first-child > p');
                 highlightText.append('<p id="tip_select_text_for_reply" class="_hidden_tip_chrome_addition_tip"> test</p>') //have to keep the space
-                //highlightText.attr("id", "tip_select_text_for_reply");
                 selectText("tip_select_text_for_reply");
                 setTimeout(() => {
                     clickMe.click();
@@ -82,10 +93,7 @@ $(document).ready(function() {
                         let submitbuttonTarget = $("#tip_target_bar_focus > div:first-child()").find('button[type="submit"]');
                         submitbuttonTarget.click();
                         $("#tip_target_bar_focus").attr("id", "");
-                        //change setting
-                        // let placeTarget = $("#tip_amount_target_text_area > div > div > div > div > div > div");
-                        // placeTarget.append('<div class="" data-block="true" data-editor="c78d53" data-offset-key="c78d53_initial-0-0"><div data-offset-key="c78d53_initial-0-0" class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"><span data-offset-key="c78d53_initial-0-0"><span data-text="true">test</span></span></div></div>')
-                    }, 100);
+                        }, 100);
                 }, 100);
             });
         });

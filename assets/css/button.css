@@ -62,5 +62,11 @@
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+#button_tip_test {
+  padding: 100px;
+  position: fixed;
+  z-index: 10000;
+  background: blue;
+  bottom: 0; }
 
 /*# sourceMappingURL=button.css.map */

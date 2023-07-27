@@ -3,6 +3,20 @@
     "name": "BanTip",
     "description": "Make tipping Great Again.",
     "version": "0.1", 
+    "permissions": [
+      "tabs",
+      "http://*/*",
+      "https://*/*"
+    ],
+    "icons": {
+      "16": "assets/img/bantiplogo.png",
+      "32": "assets/img/bantiplogo.png",
+      "48": "assets/img/bantiplogo.png",
+      "128": "assets/img/bantiplogo.png"
+    },
+    "background": {
+      "service_worker": "assets/js/background.js"
+    },
     "content_scripts": [
         {
         "matches": ["https://www.reddit.com/r/banano/*"],
@@ -12,6 +26,6 @@
     ],
     "action": {
       "default_popup": "index.html",
-      "default_icon": "assets/img/gmKIT88Ha1z8VBMJFOOH.png"
+      "default_icon": "assets/img/bantiplogo.png"
     }
   }
