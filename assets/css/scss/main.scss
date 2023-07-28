@@ -1,9 +1,28 @@
+$offWhite : #F9F9F9;
+$egg : #f1f2f3;
+$darkFont : #333333;
+$darkerFont : #030303;
+$lightfont : #A1A1A1;
+$error : #ed1a66;
+$banyellow: #EBC712;
+
+$transition : all 0.32s ease-in-out;
+
+@font-face {
+    font-family: jost;
+    src: url(/assets/lib/font/Jost-VariableFont_wght.ttf);
+}
+
+$fontfamily: jost;
+
 @import "svg";
 
+//MAIN
 * {
     box-sizing: border-box;
     padding: 0px;
     margin: 0;
+    font-family: $fontfamily;
 }
 
 html, body {
@@ -11,9 +30,148 @@ html, body {
     margin: 0 auto;
 }
 
+h1 {
+    font-size: 39px;
+    color: $darkFont;
+    font-weight: 500;
+    line-height: 1.2em;
+    margin-bottom: 15px;
+}
+
+p {
+    font-weight: 400;
+    color: $darkerFont;
+    margin-bottom: 10px;
+    font-size: 1em;
+    line-height: 2em;
+}
+
 main {
     width: 400px;
     min-height: 600px;
+    background: $offWhite;
+}
+
+strong {
+    font-weight: 700;
+}
+
+input {
+    display: block;
+    width: 100%;
+    border: 0px;
+    border-bottom: solid 1px #ccc;
+    background: transparent;
+    padding: 10px;
+}
+
+
+button {        
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+    height: 44px;
+    padding: 0px 20px;
+    border-radius: 50px;
+    border: 0px;
+    background: $egg;
+    color: black;
+    font-size: 1.4em;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
+    cursor: pointer;
+    text-decoration: none;
+    text-align: left;
+    &::after {
+        content: '';
+        top: 50%;
+        transform: translateY(-50%);
+        right: 8px;
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        background: $darkerFont;
+        border-radius: 50px;
+    }
+    &::before {
+        content: '';
+        background-image: url($arrow);
+        height: 15px;
+        width: 15px;
+        display: block;
+        position: absolute;
+        filter: invert(1);
+        z-index: 4;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: $transition;
+    }
+    span {
+        position: relative;
+        z-index: 2;
+    }
+    .fill-container {
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        width: calc(100% + 30px);
+        padding-bottom: 100%;
+        transform: translateY(-50%) rotate(180deg);
+        &::after{
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 0;
+            width: calc(100% + 30px);
+            height: 100%;
+            background-color: $banyellow;
+            border-radius: 50%;
+            transition: all 1.4s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+            transform: translateY(-100%);
+        }
+    }
+    &:hover{
+        transform: translateY(-4px);
+        color: white;
+        .fill-container{
+            transform: translateY(-50%) rotate(0);
+            &:after{
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+//CLASSES
+.logo {
+    background-image: url($bananoIcon);
+    background-size: contain;
+    height: 50px;
+    width: 50px;
+}
+
+.content {
+    padding: 40px;
+}
+
+.smaller-links {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 10px;
+    color: $lightfont;
+    a {
+        color: $lightfont;
+        transition: $transition;
+        &:hover {
+            color: $error;
+        }
+    }
+}
+
+.max-width {
+    max-width: 220px;
 }
 
 .card {
@@ -21,7 +179,7 @@ main {
     border-radius: 10px;
     width: 100%;
     &.large {
-        height: 250px;
+        height: 220px;
     }
 }
 
@@ -32,6 +190,7 @@ main {
     animation:scroll 100s linear infinite;
 }
 
+//KEYFRAMES
 @keyframes scroll { 
     100% { 
         background-position-x: 220%;
