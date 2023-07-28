@@ -1,0 +1,39 @@
+@import "svg";
+
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0;
+}
+
+html, body {
+    padding: 0px;
+    margin: 0 auto;
+}
+
+main {
+    width: 400px;
+    min-height: 600px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    &.large {
+        height: 250px;
+    }
+}
+
+.start-up {       
+    background-image: url($bananobackground);
+    background-size: 220%;
+    background-position-x: 0%;
+    animation:scroll 100s linear infinite;
+}
+
+@keyframes scroll { 
+    100% { 
+        background-position-x: 220%;
+    } 
+}

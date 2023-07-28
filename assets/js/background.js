@@ -1,7 +1,10 @@
 //Message Listeners
+let windowSize;
+
 chrome.runtime.onMessage.addListener(request => {
 
-    if (request == "OpenPopup") {
+    if (request.type == "OpenPopup") {
+        windowSize = request.content; 
         chrome.windows.getAll({}, function(window_list) {
             var extWindow = '';
             window_list.forEach(function(chromeWindow) {
@@ -17,11 +20,12 @@ chrome.runtime.onMessage.addListener(request => {
                 //Open window
                 chrome.windows.create(
                     {
-                        url: "index.html",
+                        url: "tip.html",
                         type: "popup",
                         focused: true,
                         width: 400,
                         height: 600,
+                        left: windowSize - 500,
                     },
                     function(chromeWindow) {
                         extWindow = chromeWindow.id;

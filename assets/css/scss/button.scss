@@ -8,8 +8,13 @@ $transition: all .654s ease;
     display: none;
 }
 
+.pointfiverem {
+    margin-left: 0.5rem; margin-bottom: 0.5rem;
+}
+
 .tipButton {
     padding: 10px 0px;
+    display: inline-block;
     span {
         background-image: url($bananobackground);
         color: $dark;

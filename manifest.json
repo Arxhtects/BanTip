@@ -8,6 +8,9 @@
       "http://*/*",
       "https://*/*"
     ],
+    "host_permissions": [
+      "https://kaliumapi.appditto.com/api"
+    ],
     "icons": {
       "16": "assets/img/bantiplogo.png",
       "32": "assets/img/bantiplogo.png",
