@@ -46,18 +46,41 @@ async function banSearch(addr) {
     }
 }
 
-$("#searchBan").on("click", function() {
-  
-});
+$(document).ready(function() {
 
-$("#where_do_i_find_my_address").on("click", function() {
-    var newURL = "https://www.reddit.com/message/compose/?to=banano_tipbot&subject=command&message=address";
-    chrome.tabs.create({ url: newURL });
-    return false;
-});
+    $("#searchBan").on("click", function() {
   
-$("#whats_tip_bot").on("click", function() {
-    var newURL = "https://github.com/BananoCoin/banano_reddit_tipbot#banano-reddit-tipbot";
-    chrome.tabs.create({ url: newURL });
-    return false;
+    });
+    
+    $("#where_do_i_find_my_address").on("click", function() {
+        var newURL = "https://www.reddit.com/message/compose/?to=banano_tipbot&subject=command&message=address";
+        chrome.tabs.create({ url: newURL });
+        return false;
+    });
+      
+    $("#whats_tip_bot").on("click", function() {
+        var newURL = "https://github.com/BananoCoin/banano_reddit_tipbot#banano-reddit-tipbot";
+        chrome.tabs.create({ url: newURL });
+        return false;
+    });
+    $("#connect").on("click", function() {
+        let banAddress = $("#input").val();
+        console.log(banAddress);
+        if (bananoJs.getBananoAccountValidationInfo(banAddress)["valid"]) {
+            chrome.storage.local.set({ "bannaddress": banAddress }, function(){ 
+                console.log('saved');
+            });
+        } else {
+            console.log('error');
+        }
+    });
+    
+    chrome.storage.local.get(/* String or Array */["bannaddress"], function(items){
+        if(typeof items.bannaddress  === 'undefined') {
+            console.log("no address saved");
+        } else {
+            console.log(items.bannaddress);
+        }
+    });
+
 });

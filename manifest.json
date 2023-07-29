@@ -6,7 +6,8 @@
     "permissions": [
       "tabs",
       "http://*/*",
-      "https://*/*"
+      "https://*/*",
+      "storage"
     ],
     "host_permissions": [
       "https://kaliumapi.appditto.com/api"
