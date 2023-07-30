@@ -2,6 +2,11 @@ let tiptotal;
 
 function onError(error) {
     console.error(`Error: ${error}`);
+    $("body").append('<section class="active error-window">' + error + '</section>');
+    setTimeout(() => {
+        $(".error-window").removeClass('active');
+    }, 5000);
+    console.log('error');
 }
   
 function sendMessageToTabs(tabs) {
