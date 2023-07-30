@@ -112,6 +112,7 @@ $(document).ready(function() {
                 setTimeout(() => {
                     let targetButton = textboxTarget.parent().parent().find('button[type="submit"]');
                     targetButton.click();
+                    targetKey.remove();
                 }, 100);
             }, 100);
         } else {
@@ -127,10 +128,10 @@ $(document).ready(function() {
                         let submitbuttonTarget = $("#tip_target_bar_focus > div:first-child()").find('button[type="submit"]');
                         submitbuttonTarget.click();
                         $("#tip_target_bar_focus").attr("id", "");
+                        targetKey.remove();
                     }, 100);
             }, 100);
         }
-        targetKey.remove();
     });
 
     /////////

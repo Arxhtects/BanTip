@@ -10,31 +10,26 @@ async function History(addr) {
 async function banSearch(addr) {
     if (bananoJs.getBananoAccountValidationInfo(addr)["valid"]) {
         let balance = await bananoJs.getAccountBalanceRaw(addr) / 100000000000000000000000000000;
-        balance = balance.toFixed(2) + " BAN"; 
+        balance = balance.toFixed(2) + "<span>ban</span>"; 
         let history = await History(addr);
-        
-        $("#transactions").empty();
+        let createP = '';
 
         //ToDo Limit Length of history. 
         for (let i = 0; i < history.length; i++) {
-            let createP = document.createElement("p");
             let sent = "send" == history[i]["type"];
-            let from;
             let date = new Date(history[i]["local_timestamp"] * 1000).toLocaleString();
-            sent ? (from = "to") : (from = "from");
-            sent ? (sent = "sent") : (sent = "received");
-            createP.innerHTML = sent + " " + (Math.round(history[i]["amount_decimal"] * 100) / 100).toFixed(2) + " ban <br /><strong>" + from + ": " + history[i]["account"] + "</strong><br>on " +  date;
-            $("#transactions").append(createP);
+
+            sent ? (sent = "-") : (sent = "+");
+            createP += "<data-transaction><div data-tag='info'><strong>" + " " + history[i]["account"] + "</strong><span>on " +  date  + "</span></div><div data-tag='cost'>" +  sent + " " + (Math.round(history[i]["amount_decimal"] * 100) / 100).toFixed(2) + " ban </div></data-transaction>";
         }
         
-        $("#monkey-image").empty();
+        $("#transactions").empty();
+        $(".loading").removeClass("loading");
+
         $("#monkey-image").prepend("<img src='https://monkey.banano.cc/api/v1/monkey/" + addr + "'>");
-        
-        $("#address").empty();
         $("#address").text(addr);
-        
-        $("#balance").empty();
-        $("#balance").text(balance);
+        $("#balance").html(balance);
+        $("#transactions").append(createP);
         
     } else {
         $(".error-window").text("Unable to find transactions");
