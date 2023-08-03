@@ -49,7 +49,7 @@ $(document).ready(function() {
     //add button to old reddit, The only one you should use cos its written well.
 
     ///////    
-    //Attempt to add button to middle reddit, even tho new reddit is a pile of ass.
+    //Attempt to add button to middle reddit, even tho new reddit is a pile of poop.
     let postTarget = $('div[data-testid="post-container"]'); //there should only be one post container
     //target post container
     if(postTarget.length) {
@@ -62,6 +62,17 @@ $(document).ready(function() {
                 postTarget.find('div[data-test-id="post-content"]').append('<div class="tipButton reddit-worst-one tip-worst-reddit" data-target="key_post_author_main_tip_target"><span><strong>Tip ' + User + '</strong></span></div>');
             }
         }, 2000);
+    }
+
+    //Old reddit data-type="comment"
+    if($('div[data-type="comment"] > .entry').length) {
+        $('div[data-type="comment"] > .entry').each(function() { //no need for timeout on this one, because its better.
+            let User = $(this).find('.author').text();
+            if(User.indexOf("Banano_Tipbot") === -1) {
+                $(this).append('<div class="tipButton reddit-the-best-one tip-best-reddit-old" data-target="key_' + targetId(8) + count +'"><span><strong>Tip ' + User + '</strong></span></div>');
+            }
+            count = count + 1;
+        });
     }
 
     if($('div[data-testid="comment"]').length) {
@@ -106,8 +117,8 @@ $(document).ready(function() {
             setTimeout(() => {
                 let textboxTarget = targetKey.parent().parent().parent().find('div[data-test-id="comment-submission-form-markdown"]');
                 //Both text and value need to be present.
-                textboxTarget.find('textarea').text("testban:" + request.greeting + "s"); //extra letter for removal
-                textboxTarget.find('textarea').val("testban:" + request.greeting + "s");
+                textboxTarget.find('textarea').text("!ban " + request.greeting + "s"); //extra letter for removal
+                textboxTarget.find('textarea').val("!ban " + request.greeting + "s");
                 document.execCommand('delete'); //hack hack hack hack depreciated HACK
                 setTimeout(() => {
                     let targetButton = textboxTarget.parent().parent().find('button[type="submit"]');
@@ -116,8 +127,10 @@ $(document).ready(function() {
                 }, 100);
             }, 100);
         } else {
-            let clickMe = targetKey.parent().parent().parent().find('div:last-child > div:eq(2) > button:first-child');
-            targetKey.text("testban:" + request.greeting);
+            console.log(targetKey);
+            let clickMe = targetKey.parent().parent().parent().find('i.icon-comment');
+            console.log(clickMe);
+            targetKey.text(" !ban " + request.greeting);
             selectText("" + tipAmountTarget + "");
             setTimeout(() => {
                 clickMe.click();
@@ -134,10 +147,57 @@ $(document).ready(function() {
         }
     });
 
-    /////////
+    ///////data-click-id="media" / data-click-id="body"
+    //refresh page on reddit 2 cos it uses some wierd ajax thing
+    [...document.querySelectorAll('img')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
+        item.addEventListener('click', function() {
+            if (window.location.href.indexOf("comments") < 1) {
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            }
+        });
+    });
+    [...document.querySelectorAll('[data-click-id="body"]')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
+        item.addEventListener('click', function() {
+            if (window.location.href.indexOf("comments") < 1) {
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            }
+        });
+    });
+    [...document.querySelectorAll('[data-click-id="media"]')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
+        item.addEventListener('click', function() {
+            if (window.location.href.indexOf("comments") < 1) {
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            }
+        });
+    });
+    [...document.querySelectorAll('[data-testid="post-container"]')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
+        item.addEventListener('click', function() {
+            if (window.location.href.indexOf("comments") < 1) {
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            }
+        });
+    });
+    ///
+
+      //OLD REDDIT
+      [...document.querySelectorAll('.reddit-the-best-one')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
+        item.addEventListener('click', function() {
+            chrome.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
+        });
+    });
+
 
     //wait for it to be brought in before applying listener, probably a better way of doing this but im lazy and this works.
     setTimeout(() => {
+
         [...document.querySelectorAll('.tip-worst-reddit')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
             item.addEventListener('click', function() {
                 let highlightText;
@@ -146,7 +206,7 @@ $(document).ready(function() {
                 if(tipAmountTarget == 'key_post_author_main_tip_target') {
                     highlightText = $(this).parent();
                 } else {
-                    highlightText = $(this).parent().find('div:first-child');
+                    highlightText = $(this);
                 }
                 if($("#" + tipAmountTarget).length == 0) {
                     highlightText.append('<p id="' + tipAmountTarget + '" class="_hidden_tip_chrome_addition_tip"></p>') //have to keep the space

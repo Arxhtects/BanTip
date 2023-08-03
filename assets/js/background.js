@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(request => {
                         type: "popup",
                         focused: true,
                         width: 400,
-                        height: 600,
+                        height: 630,
                         left: windowSize - 500,
                     },
                     function(chromeWindow) {

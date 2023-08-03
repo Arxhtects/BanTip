@@ -53,6 +53,11 @@ main {
     background: $offWhite;
 }
 
+section.main {
+    width: 100%;
+    padding: 40px;
+}
+
 strong {
     font-weight: 700;
 }
@@ -221,16 +226,71 @@ button {
     color: white;
     background: $error;
     transition: $transition;
+    z-index: 22;
     &.active {
         bottom: 0vh;
     }
 }
 
+.copy {
+    background-image: url($copy);    
+    height: 20px;
+    width: 20px;
+    background-size: contain;
+    cursor: pointer;
+    position: relative;
+    bottom: 0px;
+    transition: $transition;
+    &:hover {
+        bottom: 5px;
+    }
+}
+
 //CLASSES
+qr-code-outer {        
+    padding: 40px 60px;
+    position: fixed;
+    z-index: 5;
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    background: white;
+    bottom: -100vh;
+    border-radius: 50px 50px 0px 0px;
+    transition: $transition;
+    .active & {
+        bottom: 0vh;
+    }
+    button {
+        &:before {
+            transform: translateY(-50%) rotate(90deg);
+        }
+    }
+    #qr-code-wrapper {
+        width: 100%;
+        margin: 25px 0px 5px 0px;
+        img {
+            width: 100%;
+        }
+    }
+}
+
+.offwhite-bg {
+    background: $offWhite;
+}
+
+.success{
+    background-color: rgb(49, 236, 143);
+}
+
 .wrap {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+    width: 100%;
     .address {
         max-width: 230px;
     }
@@ -369,8 +429,29 @@ data-transaction {
     }
 }
 
-//ID's
+tip-input {
+    p {
+        width: 100%;
+        text-align: center;
+    }
+}
 
+.ban-tip-wrapper-buttons {
+    display: flex;
+    overflow-x: scroll;
+    padding: 20px 0px;
+    .ban-tip-ammount, a {
+        margin-right: 10px;
+        min-width: 50px;
+    }
+    .ban-tip-ammount {
+        &:before {
+            display: none !important;
+        }
+    }
+}
+
+//ID's
 #wallet-card {
     margin-bottom: 20px;
 }
@@ -398,6 +479,12 @@ data-transaction {
     overflow-x: hidden;
 }
 
+#value {
+    border-bottom: 0px;
+    text-align: center;
+    font-size: 40px;
+}
+
 //KEYFRAMES
 @keyframes scroll { 
     100% { 
@@ -410,3 +497,28 @@ data-transaction {
       transform: translateX(100%);
     }
 }
+
+//webkits
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $egg; 
+    border-radius: 50px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $lightfont; 
+    border-radius: 50px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $darkFont; 
+  }

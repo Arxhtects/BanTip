@@ -1,6 +1,8 @@
 const bananoJs = window.bananocoinBananojs;
 bananoJs.setBananodeApiUrl("https://kaliumapi.appditto.com/api");
 
+// async
+
 async function History(addr) {
     let history = await bananoJs.getAccountHistory(addr, 10);
     history = history["history"];
@@ -10,7 +12,8 @@ async function History(addr) {
 async function banSearch(addr) {
     if (bananoJs.getBananoAccountValidationInfo(addr)["valid"]) {
         let balance = await bananoJs.getAccountBalanceRaw(addr) / 100000000000000000000000000000;
-        balance = balance.toFixed(2) + "<span>ban</span>"; 
+        let balancePreSan = balance.toFixed(2);
+        balance = balancePreSan + "<span>ban</span>"; 
         let history = await History(addr);
         let createP = '';
 
@@ -28,8 +31,11 @@ async function banSearch(addr) {
 
         $("#monkey-image").prepend("<img src='https://monkey.banano.cc/api/v1/monkey/" + addr + "'>");
         $("#address").text(addr);
+        $("#address-for-qr").text(addr);
         $("#balance").html(balance);
         $("#transactions").append(createP);
+
+        $("#value").attr("data-total", balancePreSan);
         
     } else {
         $(".error-window").text("Unable to find transactions");
@@ -40,15 +46,39 @@ async function banSearch(addr) {
     }
 }
 
+//functions
+
+function copyToClipboard(element) {
+    navigator.clipboard.writeText(element);
+}
+
 $(document).ready(function() {
+
+    $(".copy").on("click", function() {
+        let toCopy = $(this).parent().find("span:first-child").text();
+        copyToClipboard(toCopy);
+        $("body").append('<section class="active error-window success">Copied</section>');
+        setTimeout(() => {
+            $(".error-window").removeClass('active');
+        }, 5000);
+    });
+
+    $("#recive-ban").on("click", function() {
+        $("body").addClass("active");
+    });
     
+    $("#close-button").on("click", function() {
+        $("body").removeClass("active");
+    });
+
     chrome.storage.local.get(/* String or Array */["bannaddress"], function(items){
         if(typeof items.bannaddress  === 'undefined') {
             console.log("no address saved");
             window.location.href = 'connect.html';
         } else {
             //console.log(items.bannaddress);
-            banSearch(items.bannaddress)
+            banSearch(items.bannaddress);
+            new QRCode(document.getElementById("qr-code-wrapper"), items.bannaddress);
         }
     });
 

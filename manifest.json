@@ -23,7 +23,7 @@
     },
     "content_scripts": [
         {
-        "matches": ["https://www.reddit.com/r/banano/*"],
+        "matches": ["https://www.reddit.com/r/banano/*", "https://old.reddit.com/r/banano/*"],
         "js": ["assets/lib/jquery.js", "assets/js/button.js"],
         "css": ["assets/css/button.css"]
         }

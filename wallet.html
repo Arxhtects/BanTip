@@ -5,10 +5,19 @@
       <script src="assets/lib/jquery.js"></script>
       <script src="assets/lib/bananojs-master/dist/bananocoin-bananojs.js"></script>
       <script src="assets/js/function.js"></script>
+      <script src="assets/lib/qrcode.min.js"></script>
       <script src="assets/js/main.js" type="module"></script>
       <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     </head>
   <body>
+    <qr-code-outer id="qr">
+        <div class="wrap">
+            <span id="address-for-qr" class="address loading"></span> <span class="copy"></span>
+        </div>
+        <div id="qr-code-wrapper">
+        </div>
+        <button id="close-button"><span>Done</span><div class="fill-container"></div></button>
+    </qr-code-outer>
     <main>
         <section class="content">
             <section id="banWrap">
