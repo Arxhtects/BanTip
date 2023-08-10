@@ -4,7 +4,6 @@
     "description": "Make tipping Great Again. Tip on reddit using the banano currency.",
     "version": "0.1", 
     "permissions": [
-      "tabs",
       "http://*/*",
       "https://*/*",
       "storage"
