@@ -116,7 +116,7 @@ $(document).ready(function() {
     }
 
     //keep a single runtimelisterner and single request with mutlipletargetkeys to avoid multimessage requests and sends
-    chrome.runtime.onMessage.addListener((request) => { // 🤮🤮🤮
+    browser.runtime.onMessage.addListener((request) => { // 🤮🤮🤮
         let targetKey = $("#" + tipAmountTarget); //get set tiptarget
         if(tipAmountTarget == 'key_post_author_main_tip_target') {
             let markdownSwap = targetKey.parent().parent().parent().find('button[aria-label="Switch to markdown"]');
@@ -215,10 +215,10 @@ $(document).ready(function() {
       [...document.querySelectorAll('.reddit-the-best-one')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
         item.addEventListener('click', function() {
             let highlightText;
-            chrome.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
+            browser.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
             tipAmountTarget = $(this).attr("data-target");
             highlightText = $(this).parent();
-            highlightText.append('<p id="' + tipAmountTarget + '" class="_hidden_tip_chrome_addition_tip" data-tag="old-reddit"></p>') //have to keep the space
+            highlightText.append('<p id="' + tipAmountTarget + '" class="_hidden_tip_browser_addition_tip" data-tag="old-reddit"></p>') //have to keep the space
         });
     });
 
@@ -229,7 +229,7 @@ $(document).ready(function() {
         [...document.querySelectorAll('.tip-worst-reddit')].forEach(function(item) { //Do not ask me why this has 3 dots. i dont know, it wont work without them, i dont ask questions.
             item.addEventListener('click', function() {
                 let highlightText;
-                chrome.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
+                browser.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
                 tipAmountTarget = $(this).attr("data-target");
                 if(tipAmountTarget == 'key_post_author_main_tip_target') {
                     highlightText = $(this).parent();
@@ -237,7 +237,7 @@ $(document).ready(function() {
                     highlightText = $(this);
                 }
                 if($("#" + tipAmountTarget).length == 0) {
-                    highlightText.append('<p id="' + tipAmountTarget + '" class="_hidden_tip_chrome_addition_tip"></p>') //have to keep the space
+                    highlightText.append('<p id="' + tipAmountTarget + '" class="_hidden_tip_browser_addition_tip"></p>') //have to keep the space
                 }
             });
         });
@@ -257,7 +257,7 @@ $(document).ready(function() {
 
     // let button = document.getElementById('button_tip_test');
     // button.addEventListener('click', function() {
-    //     chrome.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
+    //     browser.runtime.sendMessage({content: windowSize, type: "OpenPopup"});
     // });
     ////////////////////////////////////////
 });

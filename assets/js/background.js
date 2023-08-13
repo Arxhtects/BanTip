@@ -1,24 +1,24 @@
 //Message Listeners
 let windowSize;
 
-chrome.runtime.onMessage.addListener(request => {
+browser.runtime.onMessage.addListener(request => {
 
     if (request.type == "OpenPopup") {
         windowSize = request.content; 
-        chrome.windows.getAll({}, function(window_list) {
+        browser.windows.getAll({}, function(window_list) {
             var extWindow = '';
-            window_list.forEach(function(chromeWindow) {
+            window_list.forEach(function(browserWindow) {
                 //Check windows by type
-                if (chromeWindow.type == 'popup') {
-                    extWindow = chromeWindow.id;
+                if (browserWindow.type == 'popup') {
+                    extWindow = browserWindow.id;
                     //Update opened window
-                    chrome.windows.update(extWindow, {focused: true});
+                    browser.windows.update(extWindow, {focused: true});
                     return;
                 }
             });
             if (extWindow == '') {
                 //Open window
-                chrome.windows.create(
+                browser.windows.create(
                     {
                         url: "tip.html",
                         type: "popup",
@@ -27,8 +27,8 @@ chrome.runtime.onMessage.addListener(request => {
                         height: 630,
                         left: windowSize - 500,
                     },
-                    function(chromeWindow) {
-                        extWindow = chromeWindow.id;
+                    function(browserWindow) {
+                        extWindow = browserWindow.id;
                     }
                 );
             }

@@ -45,7 +45,7 @@ input {
   background: transparent;
   padding: 10px; }
 
-a {
+a.button {
   border: 0px;
   background: #f1f2f3;
   color: black;
@@ -59,11 +59,11 @@ a {
   justify-content: center;
   align-items: center;
   flex-flow: column; }
-  a span {
+  a.button span {
     position: relative;
     z-index: 2;
     font-size: .8em; }
-  a:before {
+  a.button:before {
     content: '';
     background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 256 256' enable-background='new 0 0 256 256' xml:space='preserve'%3E%3Cmetadata%3E Svg Vector Icons : http://www.onlinewebfonts.com/icon %3C/metadata%3E%3Cg%3E%3Cg%3E%3Cpath fill='%23000000' d='M60,228c0-4.6,1.7-9.2,5.3-12.8l87.2-87.2L65.3,40.8c-7.1-7.1-7.1-18.5,0-25.5c7.1-7.1,18.5-7.1,25.5,0l99.9,100c7.1,7.1,7.1,18.5,0,25.5l-99.9,99.9c-7.1,7.1-18.5,7.1-25.5,0C61.7,237.2,60,232.6,60,228L60,228z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     height: 10px;
@@ -74,14 +74,14 @@ a {
     position: relative;
     z-index: 2;
     filter: invert(0); }
-  a .fill-container {
+  a.button .fill-container {
     position: absolute;
     left: -15px;
     top: 50%;
     width: calc(100% + 30px);
     padding-bottom: 100%;
     transform: translateY(-50%) rotate(180deg); }
-    a .fill-container::after {
+    a.button .fill-container::after {
       content: '';
       position: absolute;
       left: -15px;
@@ -92,14 +92,14 @@ a {
       border-radius: 50%;
       transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
       transform: translateY(-100%); }
-  a:hover {
+  a.button:hover {
     transform: translateY(-4px);
     color: white; }
-    a:hover:before {
+    a.button:hover:before {
       filter: invert(1); }
-    a:hover .fill-container {
+    a.button:hover .fill-container {
       transform: translateY(-50%) rotate(0); }
-      a:hover .fill-container:after {
+      a.button:hover .fill-container:after {
         transform: translateY(0); }
 
 button {

@@ -71,7 +71,7 @@ $(document).ready(function() {
         $("body").removeClass("active");
     });
 
-    chrome.storage.local.get(/* String or Array */["bannaddress"], function(items){
+    browser.storage.local.get(/* String or Array */["bannaddress"], function(items){
         if(typeof items.bannaddress  === 'undefined') {
             console.log("no address saved");
             window.location.href = 'connect.html';

@@ -6,13 +6,13 @@ $(document).ready(function() {
     
     $("#where_do_i_find_my_address").on("click", function() {
         var newURL = "https://www.reddit.com/message/compose/?to=banano_tipbot&subject=command&message=address";
-        chrome.tabs.create({ url: newURL });
+        browser.tabs.create({ url: newURL });
         return false;
     });
       
     $("#whats_tip_bot").on("click", function() {
         var newURL = "https://github.com/BananoCoin/banano_reddit_tipbot#banano-reddit-tipbot";
-        chrome.tabs.create({ url: newURL });
+        browser.tabs.create({ url: newURL });
         return false;
     });
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
         let banAddress = $("#input").val();
         console.log(banAddress);
         if (bananoJs.getBananoAccountValidationInfo(banAddress)["valid"]) {
-            chrome.storage.local.set({ "bannaddress": banAddress }, function(){ 
+            browser.storage.local.set({ "bannaddress": banAddress }, function(){ 
                 console.log('saved');
                 window.location.href = 'wallet.html';
             });

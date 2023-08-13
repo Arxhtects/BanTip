@@ -11,7 +11,7 @@ function onError(error) {
   
 function sendMessageToTabs(tabs) {
     for (const tab of tabs) {
-        chrome.tabs
+        browser.tabs
           .sendMessage(tab.id, { greeting: "" + tiptotal })
           .catch(onError);
     }
@@ -40,7 +40,7 @@ $(document).ready(function() {
                 $(".error-window").removeClass('active');
             }, 5000);
         } else {
-            chrome.tabs.query({ currentWindow: false, active: true, }).then(sendMessageToTabs).catch(onError);
+            browser.tabs.query({ currentWindow: false, active: true, }).then(sendMessageToTabs).catch(onError);
             setTimeout(() => {
                 self.close();
             }, 100);
