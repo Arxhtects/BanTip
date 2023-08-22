@@ -12,7 +12,7 @@ function onError(error) {
 function sendMessageToTabs(tabs) {
     for (const tab of tabs) {
         chrome.tabs
-          .sendMessage(tab.id, { greeting: "" + tiptotal })
+          .sendMessage(tab.id, { greeting: "" + tiptotal, autosend: "auto"  })
           .catch(onError);
     }
 }

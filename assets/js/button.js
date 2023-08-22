@@ -118,6 +118,8 @@ $(document).ready(function() {
     //keep a single runtimelisterner and single request with mutlipletargetkeys to avoid multimessage requests and sends
     chrome.runtime.onMessage.addListener((request) => { // 🤮🤮🤮
         let targetKey = $("#" + tipAmountTarget); //get set tiptarget
+        let messagesetting = request.autosend;
+        console.log(messagesetting);
         if(tipAmountTarget == 'key_post_author_main_tip_target') {
             let markdownSwap = targetKey.parent().parent().parent().find('button[aria-label="Switch to markdown"]');
             markdownSwap.click();//click has to be here
@@ -127,11 +129,21 @@ $(document).ready(function() {
                 textboxTarget.find('textarea').text("!ban " + request.greeting + "s"); //extra letter for removal
                 textboxTarget.find('textarea').val("!ban " + request.greeting + "s");
                 document.execCommand('delete'); //hack hack hack hack depreciated HACK
-                setTimeout(() => {
-                    let targetButton = textboxTarget.parent().parent().find('button[type="submit"]');
+                if(messagesetting == "auto") {
+                    setTimeout(() => {
+                        let targetButton = textboxTarget.parent().parent().find('button:contains("Switch to Fancy Pants Editor")');
+                        targetButton.click();
+                        setTimeout(() => {
+                            targetButton = textboxTarget.parent().parent().find('button[type="submit"]');
+                            targetButton.click();
+                            targetKey.remove();
+                        }, 100);
+                    }, 100);
+                } else {
+                    let targetButton = textboxTarget.parent().parent().find('button:contains("Switch to Fancy Pants Editor")');
                     targetButton.click();
                     targetKey.remove();
-                }, 100);
+                }
             }, 100);
         } else if(tipAmountTarget == 'key_post_author_main_reply_old_target') {
             let commentTarget = targetKey.parent().next();
@@ -147,25 +159,35 @@ $(document).ready(function() {
             setTimeout(() => {
                 let oldreddittextareaTarget = $("#textarea_tip_target_reddit_" + dataFullname);
                 oldreddittextareaTarget.val("!ban " + request.greeting);
-                $("#submit_tip_target_" + dataFullname).click();
+                if(messagesetting == "auto") {
+                    $("#submit_tip_target_" + dataFullname).click();
+                }
                 targetKey.remove();
             }, 100);
         } else {
-            console.log(targetKey);
-            let clickMe = targetKey.parent().parent().parent().find('i.icon-comment');
-            console.log(clickMe);
-            targetKey.text(" !ban " + request.greeting);
-            selectText("" + tipAmountTarget + "");
+            let clickMe = targetKey.parent().parent().parent().find('i.icon-comment').parent();
+            clickMe.click();
             setTimeout(() => {
-                clickMe.click();
+                let textboxTarget = targetKey.parent().parent().parent().find('button:contains("Markdown Mode")');
+                console.log(textboxTarget);
+                textboxTarget.click();
                     setTimeout(() => {
-                        let textboxTarget = targetKey.parent().parent().next().next().find('div[data-test-id="comment-submission-form-richtext"]');
-                        console.log(textboxTarget);
-                        textboxTarget.next().attr("id", "tip_target_bar_focus");
-                        let submitbuttonTarget = $("#tip_target_bar_focus > div:first-child()").find('button[type="submit"]');
-                        submitbuttonTarget.click();
-                        $("#tip_target_bar_focus").attr("id", "");
-                        targetKey.remove();
+                        textboxTarget = targetKey.parent().parent().parent().find('div[data-test-id="comment-submission-form-markdown"]');
+                        textboxTarget.find('textarea').text("!ban " + request.greeting + "s"); //extra letter for removal
+                        textboxTarget.find('textarea').val("!ban " + request.greeting + "s");
+                        document.execCommand('delete'); //hack hack hack hack depreciated HACK
+                        let targetButton = textboxTarget.parent().parent().find('button:contains("Switch to Fancy Pants Editor")');
+                        targetButton.click();
+                        setTimeout(() => {
+                            let textboxTarget = targetKey.parent().parent().next().next().find('div[data-test-id="comment-submission-form-richtext"]');
+                            textboxTarget.next().attr("id", "tip_target_bar_focus");
+                            let submitbuttonTarget = $("#tip_target_bar_focus > div:first-child()").find('button[type="submit"]');
+                            if(messagesetting == "auto") {
+                                submitbuttonTarget.click();
+                            }
+                            $("#tip_target_bar_focus").attr("id", "");
+                            targetKey.remove();
+                        }, 100);
                     }, 100);
             }, 100);
         }
