@@ -11,6 +11,22 @@ html, body {
   padding: 0px;
   margin: 0 auto; }
 
+overlay {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.32s ease-in-out;
+  z-index: 2; }
+  .active overlay, .active-settings overlay {
+    opacity: 0.34;
+    pointer-events: all; }
+
 h1 {
   font-size: 39px;
   color: #333333;
@@ -197,6 +213,20 @@ button {
   transition: all 0.32s ease-in-out; }
   .copy:hover {
     bottom: 5px; }
+
+settings-window {
+  padding: 40px 60px;
+  width: 80vw;
+  position: fixed;
+  top: 0;
+  right: -100vw;
+  height: 100vh;
+  background: white;
+  z-index: 3;
+  border-radius: 50px 0px 0px 50px;
+  transition: all 0.32s ease-in-out; }
+  .active-settings settings-window {
+    right: 0vh; }
 
 qr-code-outer {
   padding: 40px 60px;

@@ -71,6 +71,15 @@ $(document).ready(function() {
         $("body").removeClass("active");
     });
 
+    $("#settings-gear").on("click", function() {
+        $("body").addClass("active-settings");
+    });
+
+    $("overlay").on("click", function() {
+        $("body").removeClass("active-settings");
+        $("body").removeClass("active");
+    });
+
     chrome.storage.local.get(/* String or Array */["bannaddress"], function(items){
         if(typeof items.bannaddress  === 'undefined') {
             console.log("no address saved");
