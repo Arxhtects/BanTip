@@ -7,10 +7,10 @@ browser.runtime.onMessage.addListener(request => {
         windowSize = request.content; 
         browser.windows.getAll({}, function(window_list) {
             var extWindow = '';
-            window_list.forEach(function(browserWindow) {
+            window_list.forEach(function(chromeWindow) {
                 //Check windows by type
-                if (browserWindow.type == 'popup') {
-                    extWindow = browserWindow.id;
+                if (chromeWindow.type == 'popup') {
+                    extWindow = chromeWindow.id;
                     //Update opened window
                     browser.windows.update(extWindow, {focused: true});
                     return;
@@ -27,8 +27,8 @@ browser.runtime.onMessage.addListener(request => {
                         height: 630,
                         left: windowSize - 500,
                     },
-                    function(browserWindow) {
-                        extWindow = browserWindow.id;
+                    function(chromeWindow) {
+                        extWindow = chromeWindow.id;
                     }
                 );
             }

@@ -1,4 +1,5 @@
 let tiptotal; 
+let autotip;
 
 function onError(error) {
     console.error(`Error: ${error}`);
@@ -12,7 +13,7 @@ function onError(error) {
 function sendMessageToTabs(tabs) {
     for (const tab of tabs) {
         browser.tabs
-          .sendMessage(tab.id, { greeting: "" + tiptotal })
+          .sendMessage(tab.id, { greeting: "" + tiptotal, autosend: "" + autotip  })
           .catch(onError);
     }
 }
@@ -29,6 +30,11 @@ $(document).ready(function() {
         let totalAmount = $("#value").attr("data-total");
         console.log(tiptotal);
         console.log(totalAmount);
+        if($("body").hasClass("auto_tip")) {
+            autotip = "auto";
+        } else {
+            autotip = "disabled";
+        }
         if(+tiptotal > +totalAmount) {
             $("body").append('<section class="active error-window">You dont have enough ban</section>');
             setTimeout(() => {
