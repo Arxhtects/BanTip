@@ -6,6 +6,7 @@ $lightfont : #A1A1A1;
 $error : #ed1a66;
 $banyellow: #EBC712;
 $cardBG: #F1F2F4;
+$darkermodeColor: #0a182f;
 
 $transition : all 0.32s ease-in-out;
 
@@ -52,6 +53,9 @@ overlay {
 h1 {
     font-size: 39px;
     color: $darkFont;
+    .dark_mode & {
+        color: $egg;
+    }
     font-weight: 500;
     line-height: 1.2em;
     margin-bottom: 15px;
@@ -60,6 +64,9 @@ h1 {
 p {
     font-weight: 400;
     color: $darkerFont;
+    .dark_mode & {
+        color: $offWhite;
+    }
     margin-bottom: 10px;
     font-size: 1em;
     line-height: 2em;
@@ -69,6 +76,9 @@ main {
     width: 400px;
     min-height: 600px;
     background: $offWhite;
+    .dark_mode & {
+        background: #000;
+    }
 }
 
 section.main {
@@ -93,6 +103,10 @@ input {
         border: 0px;
         background: $egg;
         color: black;
+        .dark_mode & {
+            background: $darkermodeColor;
+            color: $egg;
+        }
         position: relative;
         overflow: hidden;
         transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
@@ -119,6 +133,9 @@ input {
             position: relative;
             z-index: 2;
             filter: invert(0);
+            .dark_mode & {
+                filter: invert(1);
+            }
         }
         .fill-container {
             position: absolute;
@@ -165,6 +182,10 @@ button {
     border: 0px;
     background: $egg;
     color: black;
+    .dark_mode & {
+        background: $darkermodeColor;
+        color: $egg;
+    }
     font-size: 1.4em;
     position: relative;
     overflow: hidden;
@@ -252,6 +273,9 @@ button {
 
 .copy {
     background-image: url($copy);    
+    .dark_mode & {
+        filter: invert(1);
+    }
     height: 20px;
     width: 20px;
     background-size: contain;
@@ -266,18 +290,76 @@ button {
 
 //CLASSES
 settings-window {
-    padding: 40px 60px;
+    padding: 40px;
     width: 80vw;
     position: fixed;
     top: 0;
     right: -100vw;
     height: 100vh;
     background: white;
+    .dark_mode & {
+        background: black;
+        color: white;
+    }
     z-index: 3;
-    border-radius: 50px 0px 0px 50px;
+    border-radius: 10px 0px 0px 10px;
     transition: $transition;
     .active-settings & {
         right: 0vh;
+    }
+    ul {
+        list-style: none;
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: solid 1px $egg;
+            .dark_mode & {
+                border-bottom: solid 1px #16181a;
+            }
+            .info-wrap {
+                width: calc(100% - 80px);
+                strong {
+                    display: block;
+                    font-size: 20px;
+                }
+            }
+            .switch {
+                width: 65px;
+                height: 35px;
+                border-radius: 50px;
+                background: $egg;
+                .dark_mode & {
+                    background: $darkermodeColor;
+                }
+                position: relative;
+                cursor: pointer;
+                transition: $transition;
+                &.active {
+                    background: $banyellow;
+                    &:before {
+                        left: calc(62px - 30px);
+                    }
+                }
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 3px;
+                    transform: translateY(-50%);
+                    transition: $transition;
+                    height: 30px;
+                    width: 30px;
+                    background: white;
+                    .dark_mode & {
+                        background: $darkerFont;
+                    }
+                    border-radius: 50px;
+                }
+            }
+        }
     }
 }
 
@@ -292,8 +374,11 @@ qr-code-outer {
     align-items: center;
     flex-flow: column;
     background: white;
+    .dark_mode & {
+        background: black;
+    }
     bottom: -100vh;
-    border-radius: 50px 50px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
     transition: $transition;
     .active & {
         bottom: 0vh;
@@ -314,6 +399,9 @@ qr-code-outer {
 
 .offwhite-bg {
     background: $offWhite;
+    &.dark_mode {
+        background: black;
+    }
 }
 
 .success{
@@ -325,6 +413,8 @@ qr-code-outer {
     flex-flow: row;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+    z-index: 2;
     .address {
         max-width: 230px;
     }
@@ -338,6 +428,9 @@ qr-code-outer {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    .dark_mode & {
+        color: $egg;
+    }
 }
 
 .logo {
@@ -380,6 +473,9 @@ qr-code-outer {
 
 .start-up {       
     background-image: url($bananobackground);
+    .dark_mode & {
+        background-image: url($bananobackgrounddark);
+    }
     background-size: 220%;
     background-position-x: 0%;
     animation:scroll 100s linear infinite;
@@ -389,6 +485,9 @@ qr-code-outer {
   position: relative;
   overflow: hidden;
   background-color: #DDDBDD; 
+  .dark_mode & {
+    background-color: #030303;
+  }
   border-radius: 50px;
   &.h1 {
     height: 53.8px
@@ -410,6 +509,16 @@ qr-code-outer {
       rgba(#fff, 0.5) 60%,
       rgba(#fff, 0)
     );
+    
+    .dark_mode & {
+        background-image: linear-gradient(
+      90deg,
+      rgba(#000, 0) 0,
+      rgba(#000, 0.2) 20%,
+      rgba(#000, 0.5) 60%,
+      rgba(#000, 0)
+    );
+    }
     animation: shimmer 1.2s infinite;
     content: '';
   }
@@ -428,9 +537,15 @@ data-transaction {
     align-content: center;
     padding: 10px 10px 10px 0px;
     border-bottom: solid 1px $egg;
+    .dark_mode & {
+        border-bottom: solid 1px #16181a;
+    }
     div[data-tag="info"] {
         strong {
             color: $darkerFont;
+            .dark_mode & {
+                color: white;
+            }
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -499,6 +614,9 @@ tip-input {
     display: inline-block;
     margin-bottom: 20px;
     transform: rotate(0deg);
+    .dark_mode & {
+        filter: invert(1);
+    }
     &:hover {
         transform: rotate(180deg);
     }
@@ -513,16 +631,36 @@ tip-input {
 
 #wallet-card {
     margin-bottom: 20px;
+    .dark_mode & {
+        position: relative;
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border-radius: 10px;
+            background: black;
+            opacity: 0.24;
+            z-index: 1;
+        }
+    }
 }
 
 #monkey-image {
     background: $cardBG;
+    .dark_mode & {
+        background: $darkermodeColor;
+    }
     margin-bottom: 20px;
 }
 
 #balance {
     margin-top: 12px;
     margin-bottom: 0px;
+    position: relative;
+    z-index: 2;
     span {
         font-size: 20px
     }
@@ -530,6 +668,9 @@ tip-input {
 
 #history {
     margin-top: 20px;
+    .dark_mode & {
+        color: $egg;
+    }
 }
 
 #transactions {
@@ -542,6 +683,9 @@ tip-input {
     border-bottom: 0px;
     text-align: center;
     font-size: 40px;
+    .dark_mode & {
+        color: white;
+    }
 }
 
 //KEYFRAMES
@@ -568,12 +712,18 @@ tip-input {
   /* Track */
   ::-webkit-scrollbar-track {
     background: $egg; 
+    .dark_mode & {
+        background: $darkermodeColor; 
+    }
     border-radius: 50px;
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: $lightfont; 
+    .dark_mode & {
+        background: $darkFont;
+    }
     border-radius: 50px;
   }
   

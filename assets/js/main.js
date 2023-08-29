@@ -80,6 +80,25 @@ $(document).ready(function() {
         $("body").removeClass("active");
     });
 
+    $(".switch").on("click", function() {
+        var dataSource = $(this).attr("data-switch");
+        if($(this).hasClass("active")) {
+            $(this).removeClass("active");
+            $("body").removeClass(dataSource);
+            chrome.storage.local.set({ [dataSource] : "off" }, function(){ 
+                console.log('removed');
+            });
+        } else {
+            $(this).addClass("active");
+            $("body").addClass(dataSource);
+            chrome.storage.local.set({ [dataSource] : "on" }, function(){ 
+                console.log('saved');
+            });
+        }
+    });
+
+    //Chrome Storage
+
     chrome.storage.local.get(/* String or Array */["bannaddress"], function(items){
         if(typeof items.bannaddress  === 'undefined') {
             console.log("no address saved");
@@ -88,6 +107,25 @@ $(document).ready(function() {
             //console.log(items.bannaddress);
             banSearch(items.bannaddress);
             new QRCode(document.getElementById("qr-code-wrapper"), items.bannaddress);
+        }
+    });
+
+
+    chrome.storage.local.get(/* String or Array */["dark_mode"], function(items){
+        if(typeof items.dark_mode  === 'undefined' || items.dark_mode  === 'off') {
+            //Do nothing
+        } else {
+            $("body").addClass("dark_mode");
+            $("div[data-switch='dark_mode']").addClass("active");
+        }
+    });
+    
+    chrome.storage.local.get(/* String or Array */["auto_tip"], function(items){
+        if(typeof items.auto_tip  === 'undefined' || items.auto_tip  === 'off') {
+            //Do nothing
+        } else {
+            $("body").addClass("auto_tip");
+            $("div[data-switch='auto_tip']").addClass("active");
         }
     });
 
