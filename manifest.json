@@ -2,10 +2,11 @@
     "manifest_version": 3,
     "name": "BanTip",
     "description": "Make tipping Great Again. Tip on reddit using the banano currency.",
-    "version": "0.2", 
+    "version": "0.3", 
     "permissions": [
       "http://*/*",
       "https://*/*",
+      "debugger",
       "storage"
     ],
     "host_permissions": [
@@ -22,7 +23,7 @@
     },
     "content_scripts": [
         {
-        "matches": ["https://www.reddit.com/r/banano/*", "https://old.reddit.com/r/banano/*"],
+        "matches": ["https://www.reddit.com/*", "https://old.reddit.com/*", "https://www.reddit.com/r/banano/*", "https://old.reddit.com/r/banano/*"],
         "js": ["assets/lib/jquery.js", "assets/js/button.js"],
         "css": ["assets/css/button.css"]
         }

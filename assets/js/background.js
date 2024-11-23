@@ -34,5 +34,17 @@ chrome.runtime.onMessage.addListener(request => {
             }
         });
 
+    } else {
+        chrome.tabs.query({active: true}, function(tabs) {
+            chrome.debugger.attach({ tabId: tabs[0].id }, "1.2", function() {
+                console.log(request);
+                chrome.debugger.sendCommand({ tabId: tabs[0].id }, "Input.dispatchMouseEvent", { type: "mousePressed", x: request.x, y: request.y, button: "left", clickCount: 1 }, () => {});
+            });
+            setTimeout(() => {
+                chrome.debugger.detach({ tabId: tabs[0].id });
+            }, 500);
+        });
     }
 });
+
+
